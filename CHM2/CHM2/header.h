@@ -6,9 +6,9 @@ using namespace std;
 typedef double mytype;
 int N, m, k, al_n;
 
-class slau {
+class slau
+{
 private:
-	vector<mytype> xii;
 	vector<mytype> al;
 	vector<mytype> ai;
 	vector<mytype> B;
@@ -30,7 +30,8 @@ public:
 	mytype norma(vector <mytype> f);
 };
 
-void slau::Readfile() {
+void slau::Readfile() 
+{
 	int i;
 	mytype temp;
 	ifstream filein;
@@ -40,58 +41,63 @@ void slau::Readfile() {
 	filein >> k;
 	filein >> nevas;
 	filein >> w;
-	temp = 0 - k - m - 1;
-	ai.push_back(temp);
-	temp += k;
-	ai.push_back(temp);
-	temp += m;
-	ai.push_back(temp);
-	temp += 1;
-	ai.push_back(temp);
-	xii.push_back(temp);
-	temp += 1;
-	ai.push_back(temp);
-	xii.push_back(temp);
-	temp += m;
-	ai.push_back(temp);
-	xii.push_back(temp);
-	temp += k;
-	ai.push_back(temp);
-	xii.push_back(temp);
 
-	for (i = 0; i < 7; i++) {
-		for (int j = 0; j < N; j++) {
+	ai.resize(7);
+	al.resize(N * 7);
+	B.resize(N);
+	X.resize(N);
+	X1.resize(N);
+
+	ai[0] = 0 - (k + 1) - (m + 1) - 1;
+	ai[1] = 0 - (m + 1) - 1;
+	ai[2] = - 1;
+	ai[3] = 0;
+	ai[4] = 1;
+	ai[5] = 1 + m + 1;
+	ai[6] = 1 + m + 1 + k + 1;
+
+	for (i = 0; i < 7; i++)
+	{
+		for (int j = 0; j < N; j++) 
+		{
 			filein >> temp;
-			al.push_back(temp);
+			al[i * N + j] = temp;
 		}
 	}
 
-	for (i = 0; i < N; i++) {
+	for (i = 0; i < N; i++)
+	{
 		filein >> temp;
-		B.push_back(temp);
+		B[i] = (temp);
 	}
 
-	for (i = 0; i < N; i++) {
-		X.push_back(0);
-		X1.push_back(0);
+	for (i = 0; i < N; i++)
+	{
+		X[i] = 0;
+		X1[i] = 0;
 	}
 }
 
-void slau::Gaus_Zeidel() {
+void slau::Gaus_Zeidel()
+{
 	Readfile();
 	mytype i, temp = 0, temp1 = 0, k, ks = 3, ke, di, li, x0 = 0, x1 = N;
 	int flag = 1;
 	di = ks * N;
 	cout.precision(15);
-	while (nevas > pogr && flag < 30000) {
+	while (nevas > pogr && flag < 30000)
+	{
 		ks = 3;
 		ke = 7;
-		for (i = 0; i < N; i++) {
+		for (i = 0; i < N; i++) 
+		{
 			temp = B[i];
-			for (int j = ks; j < ke; j++) {
+			for (int j = ks; j < ke; j++)
+			{
 				k = j * N + i;
 				li = i + ai[j];
-				if (li >= 0) {
+				if (li >= 0) 
+				{
 					if (li >= N) ke = j;
 					else
 						temp -= al[k] * X[li];
@@ -112,20 +118,25 @@ void slau::Gaus_Zeidel() {
 	Printfile(flag);
 	cin.get();
 }
-void slau::Jacoby() {
+void slau::Jacoby() 
+{
 	Readfile();
 	mytype i, temp = 0, k, ks = 3, ke, di, li, flag = 1, x0 = 0, x1 = N;
 	di = ks * N;
 	cout.precision(15);
-	while (nevas > pogr && flag < 30000) {
+	while (nevas > pogr && flag < 30000) 
+	{
 		ks = 3;
 		ke = 7;
-		for (i = 0; i < N; i++) {
+		for (i = 0; i < N; i++) 
+		{
 			temp = B[i];
-			for (int j = ks; j < ke; j++) {
+			for (int j = ks; j < ke; j++) 
+			{
 				k = j * N + i;
 				li = i + ai[j];
-				if (li >= 0) {
+				if (li >= 0)
+				{
 					if (li >= N) ke = j;
 					else
 						temp -= al[k] * X[li];
@@ -147,14 +158,18 @@ void slau::Jacoby() {
 	cin.get();
 }
 
-mytype slau::otn_nevas() {
+mytype slau::otn_nevas() 
+{
 	mytype ks = 3, ke = 7, temp = 0, li;
 	vector<mytype> f;
-	for (int i = 0; i < N; i++) {
-		for (int j = ks; j < ke; j++) {
+	for (int i = 0; i < N; i++) 
+	{
+		for (int j = ks; j < ke; j++) 
+		{
 			k = j * N + i;
 			li = i + ai[j];
-			if (li >= 0) {
+			if (li >= 0)
+			{
 				if (li >= N) ke = j;
 				else
 					temp += al[k] * X[li];
@@ -172,7 +187,8 @@ mytype slau::otn_nevas() {
 	return fb / b;
 }
 
-mytype slau::otn_pogr() {
+mytype slau::otn_pogr()
+{
 	mytype xt, x;
 	for (int i = 0; i < N; i++) X1[i] = i + 1;
 	xt = norma(X1);
@@ -181,15 +197,18 @@ mytype slau::otn_pogr() {
 	return x / xt;
 }
 
-mytype slau::norma(vector<mytype> f) {
+mytype slau::norma(vector<mytype> f)
+{
 	mytype al = 0;
-	for (int i = 0; i < N; i++) {
+	for (int i = 0; i < N; i++)
+	{
 		al += f[i] * f[i];
 	}
 	return sqrt(al);
 }
 
-void slau::Printfile(int n) {
+void slau::Printfile(int n)
+{
 	ofstream file;
 	file.open("out.txt");
 	file.precision(15);

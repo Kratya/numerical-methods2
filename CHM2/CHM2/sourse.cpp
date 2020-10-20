@@ -1,7 +1,8 @@
 #include "Header.h"
 
-void main() {
+void main() 
+{
 	slau A;
-	A.Jacoby();
-	//A.Gaus_Zeidel();
+	//A.Jacoby();
+	A.Gaus_Zeidel();
 }
