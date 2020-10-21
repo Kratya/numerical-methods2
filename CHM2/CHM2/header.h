@@ -42,21 +42,23 @@ void slau::Readfile()
 	filein >> nevas;
 	filein >> w;
 
-	ai.resize(7);
-	al.resize(N * 7);
+	ai.resize(9);
+	al.resize(N * 9);
 	B.resize(N);
 	X.resize(N);
 	X1.resize(N);
 
-	ai[0] = 0 - (k + 1) - (m + 1) - 1;
-	ai[1] = 0 - (m + 1) - 1;
-	ai[2] = - 1;
-	ai[3] = 0;
-	ai[4] = 1;
-	ai[5] = 1 + m + 1;
-	ai[6] = 1 + m + 1 + k + 1;
+	ai[0] = 0 - (m + 1) - 3;
+	ai[1] = 0 - (m + 1) - 2;
+	ai[2] = 0 - (m + 1) - 1;
+	ai[3] = - 1;
+	ai[4] = 0;
+	ai[5] = 1;
+	ai[6] = 1 + m + 1;
+	ai[7] = 1 + m + 2;
+	ai[8] = 1 + m + 3;
 
-	for (i = 0; i < 7; i++)
+	for (i = 0; i < 9; i++)
 	{
 		for (int j = 0; j < N; j++) 
 		{
@@ -81,14 +83,14 @@ void slau::Readfile()
 void slau::Gaus_Zeidel()
 {
 	Readfile();
-	mytype i, temp = 0, temp1 = 0, k, ks = 3, ke, di, li, x0 = 0, x1 = N;
+	mytype i, temp = 0, temp1 = 0, k, ks = 4, ke, di, li, x0 = 0, x1 = N;
 	int flag = 1;
 	di = ks * N;
 	cout.precision(15);
 	while (nevas > pogr && flag < 30000)
 	{
-		ks = 3;
-		ke = 7;
+		ks = 4;
+		ke = 9;
 		for (i = 0; i < N; i++) 
 		{
 			temp = B[i];
@@ -121,13 +123,13 @@ void slau::Gaus_Zeidel()
 void slau::Jacoby() 
 {
 	Readfile();
-	mytype i, temp = 0, k, ks = 3, ke, di, li, flag = 1, x0 = 0, x1 = N;
+	mytype i, temp = 0, k, ks = 4, ke, di, li, flag = 1, x0 = 0, x1 = N;
 	di = ks * N;
 	cout.precision(15);
 	while (nevas > pogr && flag < 30000) 
 	{
-		ks = 3;
-		ke = 7;
+		ks = 4;
+		ke = 9;
 		for (i = 0; i < N; i++) 
 		{
 			temp = B[i];
@@ -160,7 +162,7 @@ void slau::Jacoby()
 
 mytype slau::otn_nevas() 
 {
-	mytype ks = 3, ke = 7, temp = 0, li;
+	mytype ks = 3, ke = 9, temp = 0, li;
 	vector<mytype> f;
 	for (int i = 0; i < N; i++) 
 	{
