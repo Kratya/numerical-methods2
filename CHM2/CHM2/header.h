@@ -3,9 +3,7 @@
 #include <vector>
 using namespace std;
 
-typedef double mytype;
-int N, m, k, al_n;
-
+template<class mytype>
 class slau
 {
 private:
@@ -19,6 +17,7 @@ private:
 	mytype pogrx;
 	mytype va;
 	mytype w;
+	int N, m;
 
 public:
 	void Readfile();
@@ -30,7 +29,8 @@ public:
 	mytype norma(vector <mytype> f);
 };
 
-void slau::Readfile() 
+template<typename mytype>
+void slau<mytype>::Readfile() 
 {
 	int i;
 	mytype temp;
@@ -38,7 +38,6 @@ void slau::Readfile()
 	filein.open("in.txt");
 	filein >> N;
 	filein >> m;
-	filein >> k;
 	filein >> nevas;
 	filein >> w;
 
@@ -80,7 +79,8 @@ void slau::Readfile()
 	}
 }
 
-void slau::Gaus_Zeidel()
+template<typename mytype>
+void slau<mytype>::Gaus_Zeidel()
 {
 	Readfile();
 	mytype i, temp = 0, temp1 = 0, k, ks = 4, ke, di, li, x0 = 0, x1 = N;
@@ -114,13 +114,14 @@ void slau::Gaus_Zeidel()
 		for (int j = 0; j < N; j++)
 			cout << X[j] << " ";
 		cout << endl;
-		//if ((flag%1000)==0) cin.get();
 		flag++;
 	}
 	Printfile(flag);
 	cin.get();
 }
-void slau::Jacoby() 
+
+template<typename mytype>
+void slau<mytype>::Jacoby() 
 {
 	Readfile();
 	mytype i, temp = 0, k, ks = 4, ke, di, li, flag = 1, x0 = 0, x1 = N;
@@ -160,7 +161,8 @@ void slau::Jacoby()
 	cin.get();
 }
 
-mytype slau::otn_nevas() 
+template<typename mytype>
+mytype slau<mytype>::otn_nevas() 
 {
 	mytype ks = 3, ke = 9, temp = 0, li;
 	vector<mytype> f;
@@ -168,7 +170,7 @@ mytype slau::otn_nevas()
 	{
 		for (int j = ks; j < ke; j++) 
 		{
-			k = j * N + i;
+			int k = j * N + i;
 			li = i + ai[j];
 			if (li >= 0)
 			{
@@ -189,7 +191,8 @@ mytype slau::otn_nevas()
 	return fb / b;
 }
 
-mytype slau::otn_pogr()
+template<typename mytype>
+mytype slau<mytype>::otn_pogr()
 {
 	mytype xt, x;
 	for (int i = 0; i < N; i++) X1[i] = i + 1;
@@ -199,7 +202,8 @@ mytype slau::otn_pogr()
 	return x / xt;
 }
 
-mytype slau::norma(vector<mytype> f)
+template<typename mytype>
+mytype slau<mytype>::norma(vector<mytype> f)
 {
 	mytype al = 0;
 	for (int i = 0; i < N; i++)
@@ -209,7 +213,8 @@ mytype slau::norma(vector<mytype> f)
 	return sqrt(al);
 }
 
-void slau::Printfile(int n)
+template<typename mytype>
+void slau<mytype>::Printfile(int n)
 {
 	ofstream file;
 	file.open("out.txt");

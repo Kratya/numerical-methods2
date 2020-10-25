@@ -2,7 +2,7 @@
 
 void main() 
 {
-	slau A;
+	slau<double> A;
 	A.Jacoby();
 	//A.Gaus_Zeidel();
 }
