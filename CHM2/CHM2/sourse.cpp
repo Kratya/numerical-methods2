@@ -3,6 +3,7 @@
 void main() 
 {
 	slau<double> A;
-	A.Jacoby();
+	//A.Jacoby();
 	//A.Gaus_Zeidel();
+	A.BMethod(false);
 }
