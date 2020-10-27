@@ -17,6 +17,7 @@ private:
 	mytype pogrx;
 	mytype va;
 	mytype w;
+	mytype normaB;
 	int N, m;
 
 public:
@@ -77,6 +78,8 @@ void slau<mytype>::Readfile()
 		X[i] = 0;
 		X1[i] = 0;
 	}
+
+	normaB = norma(B);
 }
 
 template<typename mytype>
@@ -184,21 +187,36 @@ mytype slau<mytype>::otn_nevas()
 		if (ks > 0) ks--;
 	}
 
-	for (int i = 0; i < N; i++) f[i] = B[i] - f[i];
-	mytype fb, b;
+	mytype fb = 0;
+	for (int i = 0; i < N; i++) 
+	{
+		f[i] = B[i] - f[i];
+		fb += f[i] * f[i];
+	}
 	fb = norma(f);
-	b = norma(B);
-	return fb / b;
+	//b = norma(B);
+	return fb / normaB;
 }
 
 template<typename mytype>
 mytype slau<mytype>::otn_pogr()
 {
 	mytype xt, x;
-	for (int i = 0; i < N; i++) X1[i] = i + 1;
-	xt = norma(X1);
-	for (int i = 0; i < N; i++) X1[i] = X[i] - X1[i];
-	x = norma(X1);
+	mytype al = 0;
+	for (int i = 0; i < N; i++)
+	{
+		X1[i] = i + 1;
+		al += X1[i] * X1[i];
+	}
+	xt = sqrt(al);
+
+	al = 0;
+	for (int i = 0; i < N; i++) 
+	{ 
+		X1[i] = X[i] - X1[i];
+		al += X1[i] * X1[i];
+	}
+	x = sqrt(al);
 	return x / xt;
 }
 
