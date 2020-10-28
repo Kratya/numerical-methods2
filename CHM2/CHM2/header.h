@@ -22,8 +22,8 @@ private:
 
 public:
 	void Readfile();
-	void Jacoby();
-	void Gaus_Zeidel();
+	//void Jacoby();
+	//void Gaus_Zeidel();
 	void Printfile(int n);
 	mytype otn_nevas();
 	mytype otn_pogr();
@@ -83,7 +83,7 @@ void slau<mytype>::Readfile()
 	normaB = norma(B);
 }
 
-template<typename mytype>
+/*template<typename mytype>
 void slau<mytype>::Gaus_Zeidel()
 {
 	Readfile();
@@ -122,9 +122,9 @@ void slau<mytype>::Gaus_Zeidel()
 	}
 	Printfile(flag);
 	cin.get();
-}
+}*/
 
-template<typename mytype>
+/*template<typename mytype>
 void slau<mytype>::Jacoby() 
 {
 	Readfile();
@@ -163,7 +163,7 @@ void slau<mytype>::Jacoby()
 	}
 	Printfile(flag);
 	cin.get();
-}
+}*/
 
 template<typename mytype>
 void slau<mytype>::BMethod(bool IsJacoby)
@@ -225,8 +225,9 @@ void slau<mytype>::BMethod(bool IsJacoby)
 template<typename mytype>
 mytype slau<mytype>::otn_nevas() 
 {
-	mytype ks = 3, ke = 9, temp = 0, li;
+	mytype ks = 4, ke = 9, temp = 0, li;
 	vector<mytype> f;
+	f.resize(N);
 	for (int i = 0; i < N; i++) 
 	{
 		for (int j = ks; j < ke; j++) 
@@ -240,7 +241,7 @@ mytype slau<mytype>::otn_nevas()
 					temp += al[k] * X[li];
 			}
 		}
-		f.push_back(temp);
+		f[i] = temp;
 		temp = 0;
 		if (ks > 0) ks--;
 	}
