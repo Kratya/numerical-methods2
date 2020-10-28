@@ -27,7 +27,7 @@ public:
 	void Printfile(int n);
 	mytype otn_nevas();
 	mytype otn_pogr();
-	mytype norma(vector <mytype> f);
+	mytype norma(vector <mytype> &f);
 	void BMethod(bool IsJacoby);
 };
 
@@ -279,7 +279,7 @@ mytype slau<mytype>::otn_pogr()
 }
 
 template<typename mytype>
-mytype slau<mytype>::norma(vector<mytype> f)
+mytype slau<mytype>::norma(vector<mytype> &f)
 {
 	mytype al = 0;
 	for (int i = 0; i < N; i++)
