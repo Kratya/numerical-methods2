@@ -5,5 +5,5 @@ void main()
 	slau<double> A;
 	//A.Jacoby();
 	//A.Gaus_Zeidel();
-	A.BMethod(A.X);
+	A.JSMethod(A.X, A.X);
 }

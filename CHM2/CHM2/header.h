@@ -28,8 +28,8 @@ public:
 	mytype otn_nevas();
 	mytype otn_pogr();
 	mytype norma(vector <mytype> &f);
-	void BMethod(vector<mytype> &X);
-	void BMethod(vector<mytype>& X, vector<mytype> &X1);
+	//void JSMethod(vector<mytype> &X);
+	void JSMethod(vector<mytype>& X, vector<mytype> &X1);
 };
 
 template<typename mytype>
@@ -165,9 +165,9 @@ void slau<mytype>::Jacoby()
 	Printfile(flag);
 	cin.get();
 }*/
-
+/*
 template<typename mytype>
-void slau<mytype>::BMethod(vector<mytype>& X)
+void slau<mytype>::JSMethod(vector<mytype>& X)
 {
 	Readfile();
 	mytype i, temp = 0, k, ks = 4, ke, di, li, flag = 1, x0 = 0, x1 = N;
@@ -205,9 +205,9 @@ void slau<mytype>::BMethod(vector<mytype>& X)
 	Printfile(flag);
 	cin.get();
 }
-
+*/
 template<typename mytype>
-void slau<mytype>::BMethod(vector<mytype>& X, vector<mytype>& X1)
+void slau<mytype>::JSMethod(vector<mytype>& X_0, vector<mytype>& X_1)
 {
 	Readfile();
 	mytype i, temp = 0, k, ks = 4, ke, di, li, flag = 1, x0 = 0, x1 = N;
@@ -228,19 +228,19 @@ void slau<mytype>::BMethod(vector<mytype>& X, vector<mytype>& X1)
 				{
 					if (li >= N) ke = j;
 					else
-						temp -= al[k] * X[li];
+						temp -= al[k] * X_0[li];
 				}
 			}
-			X1[i] = X[i] + w * temp / al[di + i];
+			X_1[i] = X_0[i] + w * temp / al[di + i];
 			if (ks > 0) ks--;
 		}
 
-		X = X1;
+		X_0 = X_1;
 
 		nevas = otn_nevas();
 		cout << flag << endl;
 		for (int j = 0; j < N; j++)
-			cout << X[j] << " ";
+			cout << X_0[j] << " ";
 		cout << endl;
 		flag++;
 	}
