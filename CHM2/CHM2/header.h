@@ -210,7 +210,8 @@ template<typename mytype>
 void slau<mytype>::JSMethod(vector<mytype>& X_0, vector<mytype>& X_1)
 {
 	Readfile();
-	mytype i, temp = 0, k, ks = 4, ke, di, li, flag = 1, x0 = 0, x1 = N;
+	mytype temp = 0;
+	int i, k, ks = 4, ke, di, li, flag = 1;
 	di = ks * N;
 	cout.precision(15);
 	while (nevas > pogr && flag < 30000)
