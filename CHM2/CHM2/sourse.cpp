@@ -5,5 +5,5 @@ void main()
 	slau<double> A;
 	//A.Jacoby();
 	//A.Gaus_Zeidel();
-	A.BMethod(false);
+	A.BMethod(A.X);
 }

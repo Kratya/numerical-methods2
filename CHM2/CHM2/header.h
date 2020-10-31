@@ -10,8 +10,6 @@ private:
 	vector<mytype> al;
 	vector<mytype> ai;
 	vector<mytype> B;
-	vector<mytype> X;
-	vector<mytype> X1;
 	mytype pogr = 1e-14;
 	mytype nevas;
 	mytype pogrx;
@@ -21,6 +19,8 @@ private:
 	int N, m;
 
 public:
+	vector<mytype> X;
+	vector<mytype> X1;
 	void Readfile();
 	//void Jacoby();
 	//void Gaus_Zeidel();
@@ -28,7 +28,8 @@ public:
 	mytype otn_nevas();
 	mytype otn_pogr();
 	mytype norma(vector <mytype> &f);
-	void BMethod(bool IsJacoby);
+	void BMethod(vector<mytype> &X);
+	void BMethod(vector<mytype>& X, vector<mytype> &X1);
 };
 
 template<typename mytype>
@@ -166,7 +167,7 @@ void slau<mytype>::Jacoby()
 }*/
 
 template<typename mytype>
-void slau<mytype>::BMethod(bool IsJacoby)
+void slau<mytype>::BMethod(vector<mytype>& X)
 {
 	Readfile();
 	mytype i, temp = 0, k, ks = 4, ke, di, li, flag = 1, x0 = 0, x1 = N;
@@ -190,26 +191,51 @@ void slau<mytype>::BMethod(bool IsJacoby)
 						temp -= al[k] * X[li];
 				}
 			}
-			switch (IsJacoby)
-			{
-			case true:
-				X1[i] = X[i] + w * temp / al[di + i];
-				break;
-			default:
-				X[i] = X[i] + w * temp / al[di + i];
-				break;
-			}
+			X[i] = X[i] + w * temp / al[di + i];
 			if (ks > 0) ks--;
 		}
 
-		switch (IsJacoby)
+		nevas = otn_nevas();
+		cout << flag << endl;
+		for (int j = 0; j < N; j++)
+			cout << X[j] << " ";
+		cout << endl;
+		flag++;
+	}
+	Printfile(flag);
+	cin.get();
+}
+
+template<typename mytype>
+void slau<mytype>::BMethod(vector<mytype>& X, vector<mytype>& X1)
+{
+	Readfile();
+	mytype i, temp = 0, k, ks = 4, ke, di, li, flag = 1, x0 = 0, x1 = N;
+	di = ks * N;
+	cout.precision(15);
+	while (nevas > pogr && flag < 30000)
+	{
+		ks = 4;
+		ke = 9;
+		for (i = 0; i < N; i++)
 		{
-		case true:
-			X = X1;
-			break;
-		default:
-			break;
+			temp = B[i];
+			for (int j = ks; j < ke; j++)
+			{
+				k = j * N + i;
+				li = i + ai[j];
+				if (li >= 0)
+				{
+					if (li >= N) ke = j;
+					else
+						temp -= al[k] * X[li];
+				}
+			}
+			X1[i] = X[i] + w * temp / al[di + i];
+			if (ks > 0) ks--;
 		}
+
+		X = X1;
 
 		nevas = otn_nevas();
 		cout << flag << endl;
